@@ -1,7 +1,10 @@
+import { useState } from "react";
+
 import { Button } from "@/core/components/ui/button.tsx";
 
 import { ParkingCard } from "@/features/parking-sidebar/components/parking-card/parking-card.tsx";
 import { useSelectParkingArea } from "@/features/parking-sidebar/hooks";
+import { AddParkingAreaDialog } from "@/features/parking-sidebar/components/add-parking-area-dialog";
 
 const mockParkingData: {
   id: number;
@@ -70,26 +73,39 @@ const mockParkingData: {
 
 export const ParkingSidebar = () => {
   const { selectedParkingArea, toggleSelectedParkingArea } = useSelectParkingArea();
+  const [showAddParkingAreaDialog, setShowAddParkingAreaDialog] = useState(false);
 
   return (
-    <aside className="fixed w-64 border-r left-0 inset-0">
-      <div className="relative h-full flex flex-col overflow-y-auto px-3 py-4">
-        <div className="flex items-center justify-between mb-4">
-          <h1 className="text-2xl font-bold sticky top-0 bg-white">Parking Areas</h1>
-          <Button size="sm">Add</Button>
-        </div>
+    <>
+      <AddParkingAreaDialog
+        open={showAddParkingAreaDialog}
+        onOpenChange={setShowAddParkingAreaDialog}
+        showTrigger={false}
+      />
+      <aside className="fixed w-64 border-r left-0 inset-0">
+        <div className="relative h-full flex flex-col overflow-y-auto px-3 py-4">
+          <div className="flex items-center justify-between mb-4">
+            <h1 className="text-2xl font-bold sticky top-0 bg-white">Parking Areas</h1>
+            <Button
+              size="sm"
+              onClick={() => setShowAddParkingAreaDialog(true)}
+            >
+              Add
+            </Button>
+          </div>
 
-        <div className="px-3 py-4 overflow-y-auto flex flex-col">
-          {mockParkingData.map(parking => (
-            <ParkingCard
-              key={parking.id}
-              {...parking}
-              isSelected={selectedParkingArea === String(parking.id)}
-              toggleSelection={() => toggleSelectedParkingArea(parking.id)}
-            />
-          ))}
+          <div className="px-3 py-4 overflow-y-auto flex flex-col">
+            {mockParkingData.map(parking => (
+              <ParkingCard
+                key={parking.id}
+                {...parking}
+                isSelected={selectedParkingArea === String(parking.id)}
+                toggleSelection={() => toggleSelectedParkingArea(parking.id)}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 };
