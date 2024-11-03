@@ -14,7 +14,7 @@ const initialSlots = [
 
 export const ParkingMap = () => {
   return (
-    <div className="relative grid grid-cols-4 justify-items-center gap-y-24 w-full">
+    <div className="relative grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 xl:grid-cols-4 justify-items-center gap-y-24 w-full">
       {initialSlots.map((row, rowIndex) => (
         <ParkingRow
           key={rowIndex}

@@ -30,7 +30,7 @@ export const TabsHeader = () => {
 
   return (
     <div className="flex items-center">
-      <span className="font-semibold text-xl mr-6">Floor</span>
+      <span className="font-semibold hidden md:block text-xl mr-6">Floor</span>
       <Tabs
         value={value}
         onValueChange={setValue}

@@ -2,7 +2,7 @@ import { AddParkingFloorButton, StatusDisplay, TabsHeader } from "@/core/compone
 
 export const Header = () => {
   return (
-    <header className="flex items-center justify-between">
+    <header className="flex flex-col lg:flex-row gap-y-4 items-center justify-between">
       <TabsHeader />
       <StatusDisplay />
       <AddParkingFloorButton />
