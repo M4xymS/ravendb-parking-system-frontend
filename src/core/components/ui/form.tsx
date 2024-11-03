@@ -1,4 +1,5 @@
 import * as React from "react";
+import { FC, ReactNode } from "react";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
 import {
@@ -9,10 +10,17 @@ import {
   FormProvider,
   useFormContext,
 } from "react-hook-form";
+import * as SelectPrimitive from "@radix-ui/react-select";
 
 import { cn } from "@/core/helpers/utils";
 import { Label } from "@/core/components/ui/label";
 import { Input, InputProps } from "@/core/components/ui/input.tsx";
+import {
+  DateTimePicker,
+  DateTimePickerProps,
+  DateTimePickerRef,
+} from "@/core/components/ui/date-time-picker.tsx";
+import { Select, SelectContent, SelectTrigger, SelectValue } from "@/core/components/ui/select.tsx";
 
 const Form = FormProvider;
 
@@ -202,6 +210,91 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
 
 FormInput.displayName = "FormInput";
 
+export interface FormDateTimePickerProps extends DateTimePickerProps {
+  description?: string | React.ReactNode;
+  name: string;
+  label?: string | React.ReactNode;
+}
+
+const FormDateTimePicker = React.forwardRef<DateTimePickerRef, FormDateTimePickerProps>(
+  ({ name, label, description, ...props }, ref) => {
+    const { control } = useFormContext();
+
+    return (
+      <FormField
+        control={control}
+        name={name}
+        render={({ field }) => (
+          <FormItem className="flex flex-col w-full">
+            {label && <FormLabel>{label}</FormLabel>}
+            <FormControl>
+              <DateTimePicker
+                {...field}
+                {...props}
+                ref={ref}
+                granularity="minute"
+              />
+            </FormControl>
+
+            {description && <FormDescription>{description}</FormDescription>}
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    );
+  }
+);
+
+FormDateTimePicker.displayName = "FormDateTimePicker";
+
+interface FormSelectProps extends React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root> {
+  name: string;
+  children: ReactNode;
+  placeholder?: string;
+  label?: string | React.ReactNode;
+  className?: string;
+  description?: string | React.ReactNode;
+}
+
+const FormSelect: FC<FormSelectProps> = ({
+  name,
+  className,
+  children,
+  label,
+  placeholder,
+  description,
+  ...props
+}) => {
+  const { control } = useFormContext();
+
+  return (
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem className={cn(className)}>
+          {label && <FormLabel>{label}</FormLabel>}
+          <Select
+            onValueChange={field.onChange}
+            value={field.value}
+            {...props}
+          >
+            <FormControl>
+              <SelectTrigger>
+                <SelectValue placeholder={placeholder} />
+              </SelectTrigger>
+            </FormControl>
+            <SelectContent>{children}</SelectContent>
+          </Select>
+
+          {description && <FormDescription>{description}</FormDescription>}
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  );
+};
+
 export {
   useFormField,
   Form,
@@ -212,4 +305,6 @@ export {
   FormMessage,
   FormField,
   FormInput,
+  FormDateTimePicker,
+  FormSelect,
 };

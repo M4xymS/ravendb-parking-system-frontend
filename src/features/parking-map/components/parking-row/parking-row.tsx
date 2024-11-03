@@ -13,6 +13,7 @@ export const ParkingRow: FC<ParkingRowProps> = ({ row, parkedCars }) => {
       {row.map((slot, index) => (
         <ParkingSlot
           key={index}
+          id={index}
           slot={slot}
           isOccupied={parkedCars.includes(slot)}
           index={index}
