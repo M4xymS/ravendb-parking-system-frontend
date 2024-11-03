@@ -18,6 +18,7 @@ interface ParkingCardProps {
   address?: string;
   isSelected: boolean;
   toggleSelection: () => void;
+  toggleClose: () => void;
 }
 
 export const ParkingCard: FC<ParkingCardProps> = ({
@@ -27,11 +28,17 @@ export const ParkingCard: FC<ParkingCardProps> = ({
   address,
   isSelected,
   toggleSelection,
+  toggleClose,
 }) => {
+  const toggleSelect = () => {
+    toggleSelection();
+    toggleClose();
+  };
+
   return (
     <Card
       className={`cursor-pointer mb-4 ${isSelected ? "bg-muted" : ""}`}
-      onClick={toggleSelection}
+      onClick={toggleSelect}
     >
       <CardHeader>
         <CardTitle className="flex justify-between items-center">
