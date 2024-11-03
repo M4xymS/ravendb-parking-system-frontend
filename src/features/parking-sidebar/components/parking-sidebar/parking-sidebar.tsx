@@ -71,7 +71,13 @@ const mockParkingData: {
   },
 ];
 
-export const ParkingSidebar = () => {
+export const ParkingSidebar = ({
+  open,
+  setIsOpen,
+}: {
+  open?: boolean;
+  setIsOpen?: (b: boolean) => void;
+}) => {
   const { selectedParkingArea, toggleSelectedParkingArea } = useSelectParkingArea();
   const [showAddParkingAreaDialog, setShowAddParkingAreaDialog] = useState(false);
 
@@ -82,7 +88,9 @@ export const ParkingSidebar = () => {
         onOpenChange={setShowAddParkingAreaDialog}
         showTrigger={false}
       />
-      <aside className="fixed w-64 border-r left-0 inset-0">
+      <aside
+        className={`${open ? "block" : "hidden"} sm:block sm:fixed w-64 sm:border-r left-0 inset-0`}
+      >
         <div className="relative h-full flex flex-col overflow-y-auto px-3 py-4">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-2xl font-bold sticky top-0 bg-white">Parking Areas</h1>
@@ -101,6 +109,7 @@ export const ParkingSidebar = () => {
                 {...parking}
                 isSelected={selectedParkingArea === String(parking.id)}
                 toggleSelection={() => toggleSelectedParkingArea(parking.id)}
+                toggleClose={() => setIsOpen && setIsOpen(false)}
               />
             ))}
           </div>

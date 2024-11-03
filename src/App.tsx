@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="min-h-screen flex">
       <ParkingSidebar />
-      <div className="ml-64 py-8 w-full">
+      <div className="sm:ml-64 py-8 w-full">
         <div className="container relative px-4 sm:px-8">
           <Header />
           <main className="flex flex-col items-center mt-16 space-y-4 w-full">
