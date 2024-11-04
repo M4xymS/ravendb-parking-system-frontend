@@ -9,7 +9,7 @@ function App() {
     <div className="min-h-screen flex">
       <ParkingSidebar />
       <div className="sm:ml-64 py-8 w-full">
-        <div className="container relative px-4 sm:px-8">
+        <div className="m-4 relative px-4 sm:px-8">
           <Header />
           <main className="flex flex-col items-center mt-16 space-y-4 w-full">
             <ParkingMap />
