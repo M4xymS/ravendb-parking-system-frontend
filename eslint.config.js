@@ -1,123 +1,124 @@
-import js from '@eslint/js';
-import globals from 'globals';
-import reactHooks from 'eslint-plugin-react-hooks';
-import reactRefresh from 'eslint-plugin-react-refresh';
-import tseslint from 'typescript-eslint';
-import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
-import stylistic from '@stylistic/eslint-plugin';
-import importPlugin from 'eslint-plugin-import';
+import js from "@eslint/js";
+import globals from "globals";
+import reactHooks from "eslint-plugin-react-hooks";
+import reactRefresh from "eslint-plugin-react-refresh";
+import tseslint from "typescript-eslint";
+import stylistic from "@stylistic/eslint-plugin";
+import importPlugin from "eslint-plugin-import";
+import pluginQuery from "@tanstack/eslint-plugin-query";
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  { ignores: ["dist"] },
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended, eslintPluginPrettier],
-    files: ['**/*.{ts,tsx}'],
+    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    files: ["**/*.{ts,tsx}"],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: globals.browser
     },
+    ...pluginQuery.configs.recommended,
     plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
-      '@stylistic': stylistic,
-      import: importPlugin,
+      "react-hooks": reactHooks,
+      "react-refresh": reactRefresh,
+      "@stylistic": stylistic,
+      import: importPlugin
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-      'no-duplicate-imports': 'error',
-      'no-param-reassign': [
-        'error',
+      "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+      "no-duplicate-imports": "error",
+      "no-param-reassign": [
+        "error",
         {
-          props: false,
-        },
+          props: false
+        }
       ],
-      '@stylistic/comma-dangle': [
-        'error',
+      "@stylistic/comma-dangle": [
+        "error",
         {
-          arrays: 'always-multiline',
-          objects: 'always-multiline',
-          imports: 'always-multiline',
-          exports: 'always-multiline',
-          enums: 'always-multiline',
-          generics: 'always-multiline',
-          functions: 'never',
-        },
+          arrays: "always-multiline",
+          objects: "always-multiline",
+          imports: "always-multiline",
+          exports: "always-multiline",
+          enums: "always-multiline",
+          generics: "only-multiline",
+          functions: "never"
+        }
       ],
-      '@stylistic/padding-line-between-statements': [
-        'error',
+      "@stylistic/padding-line-between-statements": [
+        "error",
         {
-          blankLine: 'always',
-          prev: '*',
+          blankLine: "always",
+          prev: "*",
           next: [
-            'return',
-            'class',
-            'export',
-            'switch',
-            'throw',
-            'try',
-            'while',
-            'for',
-            'block',
-            'if',
-          ],
+            "return",
+            "class",
+            "export",
+            "switch",
+            "throw",
+            "try",
+            "while",
+            "for",
+            "block",
+            "if"
+          ]
         },
         {
-          blankLine: 'always',
-          prev: ['const', 'let', 'var', 'case', 'default'],
-          next: '*',
+          blankLine: "always",
+          prev: ["const", "let", "var", "case", "default"],
+          next: "*"
         },
         {
-          blankLine: 'any',
-          prev: ['const', 'let', 'var'],
-          next: ['const', 'let', 'var'],
+          blankLine: "any",
+          prev: ["const", "let", "var"],
+          next: ["const", "let", "var"]
         },
         {
-          blankLine: 'any',
-          prev: ['export'],
-          next: ['export'],
-        },
+          blankLine: "any",
+          prev: ["export"],
+          next: ["export"]
+        }
       ],
-      'react-hooks/exhaustive-deps': 'warn',
-      'import/order': [
-        'error',
+      "react-hooks/exhaustive-deps": "warn",
+      "import/order": [
+        "error",
         {
-          groups: [['builtin', 'external'], 'internal', ['parent', 'sibling']],
-          'newlines-between': 'always',
+          groups: [["builtin", "external"], "internal", ["parent", "sibling"]],
+          "newlines-between": "always",
           pathGroups: [
             {
-              pattern: '@/pages/**',
-              group: 'internal',
-              position: 'after',
+              pattern: "@/pages/**",
+              group: "internal",
+              position: "after"
             },
             {
-              pattern: '@/core/**',
-              group: 'internal',
-              position: 'after',
+              pattern: "@/core/**",
+              group: "internal",
+              position: "after"
             },
             {
-              pattern: '@/features/**',
-              group: 'internal',
-              position: 'after',
+              pattern: "@/features/**",
+              group: "internal",
+              position: "after"
             },
             {
-              pattern: '@/helpers/**',
-              group: 'internal',
-              position: 'after',
+              pattern: "@/helpers/**",
+              group: "internal",
+              position: "after"
             },
             {
-              pattern: '@/hooks/**',
-              group: 'internal',
-              position: 'after',
+              pattern: "@/hooks/**",
+              group: "internal",
+              position: "after"
             },
             {
-              pattern: '@/types/**',
-              group: 'internal',
-              position: 'after',
-            },
-          ],
-        },
-      ],
-    },
-  },
+              pattern: "@/types/**",
+              group: "internal",
+              position: "after"
+            }
+          ]
+        }
+      ]
+    }
+  }
 );
