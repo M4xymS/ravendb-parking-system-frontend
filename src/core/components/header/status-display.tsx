@@ -1,16 +1,28 @@
-import { PlusIcon } from "lucide-react";
+import { useParams } from "react-router-dom";
+import { useState } from "react";
 
-import { Button } from "@/core/components/ui/button.tsx";
+import { AddParkingSlotDialog } from "@/core/components/dialogs/parking-slot/add-parking-slot-dialog.tsx";
+import { FloorStatusDisplaySkeleton } from "@/core/components/header/floor-status-display-skeleton.tsx";
+
+import { useGetParkingFloorStatusQuery } from "@/features/parking-map/services/hooks";
 
 export const StatusDisplay = () => {
+  const [showAddParkingSlotDialog, setShowAddParkingSlotDialog] = useState(false);
+  const { areaId, floorId } = useParams();
+  const { data: status, isLoading } = useGetParkingFloorStatusQuery(areaId, floorId);
+
+  if (isLoading) {
+    return <FloorStatusDisplaySkeleton />;
+  }
+
   const statuses = [
     {
-      value: 12,
+      value: (status?.totalSlots ?? 0) - (status?.availableSlots ?? 0),
       label: "Filled",
     },
     {
-      value: 36,
-      label: "Empty",
+      value: status?.totalSlots ?? 0,
+      label: "Total",
     },
   ];
 
@@ -27,12 +39,11 @@ export const StatusDisplay = () => {
           </div>
         ))}
       </div>
-      <Button
-        size="icon"
-        variant="outline"
-      >
-        <PlusIcon className="size-6" />
-      </Button>
+      <AddParkingSlotDialog
+        open={showAddParkingSlotDialog}
+        onOpenChange={setShowAddParkingSlotDialog}
+        showTrigger
+      />
     </div>
   );
 };

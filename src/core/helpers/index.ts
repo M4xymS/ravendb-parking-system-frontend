@@ -25,3 +25,5 @@ export {
   genMonths,
   genYears,
 } from "./date-time-picker-utils";
+
+export { makeHttpRequest } from "./makeRequest";

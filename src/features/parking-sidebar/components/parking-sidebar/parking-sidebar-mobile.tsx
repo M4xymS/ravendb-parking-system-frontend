@@ -19,7 +19,7 @@ export const ParkingSidebarMobile = () => {
         open={isOpen}
         onOpenChange={setIsOpen}
       >
-        <SheetTrigger className="mt-2">
+        <SheetTrigger className="mt-2 fixed top-2 left-6">
           <Menu />
         </SheetTrigger>
         <SheetContent

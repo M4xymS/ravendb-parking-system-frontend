@@ -3,7 +3,6 @@ import globals from "globals";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
-import eslintPluginPrettier from "eslint-plugin-prettier/recommended";
 import stylistic from "@stylistic/eslint-plugin";
 import importPlugin from "eslint-plugin-import";
 import pluginQuery from "@tanstack/eslint-plugin-query";
@@ -11,18 +10,18 @@ import pluginQuery from "@tanstack/eslint-plugin-query";
 export default tseslint.config(
   { ignores: ["dist"] },
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended, eslintPluginPrettier],
+    extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: globals.browser
     },
     ...pluginQuery.configs.recommended,
     plugins: {
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
       "@stylistic": stylistic,
-      import: importPlugin,
+      import: importPlugin
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -31,8 +30,8 @@ export default tseslint.config(
       "no-param-reassign": [
         "error",
         {
-          props: false,
-        },
+          props: false
+        }
       ],
       "@stylistic/comma-dangle": [
         "error",
@@ -42,9 +41,9 @@ export default tseslint.config(
           imports: "always-multiline",
           exports: "always-multiline",
           enums: "always-multiline",
-          generics: "always-multiline",
-          functions: "never",
-        },
+          generics: "only-multiline",
+          functions: "never"
+        }
       ],
       "@stylistic/padding-line-between-statements": [
         "error",
@@ -61,24 +60,24 @@ export default tseslint.config(
             "while",
             "for",
             "block",
-            "if",
-          ],
+            "if"
+          ]
         },
         {
           blankLine: "always",
           prev: ["const", "let", "var", "case", "default"],
-          next: "*",
+          next: "*"
         },
         {
           blankLine: "any",
           prev: ["const", "let", "var"],
-          next: ["const", "let", "var"],
+          next: ["const", "let", "var"]
         },
         {
           blankLine: "any",
           prev: ["export"],
-          next: ["export"],
-        },
+          next: ["export"]
+        }
       ],
       "react-hooks/exhaustive-deps": "warn",
       "import/order": [
@@ -90,36 +89,36 @@ export default tseslint.config(
             {
               pattern: "@/pages/**",
               group: "internal",
-              position: "after",
+              position: "after"
             },
             {
               pattern: "@/core/**",
               group: "internal",
-              position: "after",
+              position: "after"
             },
             {
               pattern: "@/features/**",
               group: "internal",
-              position: "after",
+              position: "after"
             },
             {
               pattern: "@/helpers/**",
               group: "internal",
-              position: "after",
+              position: "after"
             },
             {
               pattern: "@/hooks/**",
               group: "internal",
-              position: "after",
+              position: "after"
             },
             {
               pattern: "@/types/**",
               group: "internal",
-              position: "after",
-            },
-          ],
-        },
-      ],
-    },
+              position: "after"
+            }
+          ]
+        }
+      ]
+    }
   }
 );

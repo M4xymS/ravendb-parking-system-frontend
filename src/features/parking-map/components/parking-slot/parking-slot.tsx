@@ -1,47 +1,45 @@
 import { FC, useState } from "react";
 
-import { cn } from "@/core/helpers";
+import { ParkingSlot as ParkingSlotInterface } from "@/core/types";
+import { Tooltip, TooltipTrigger } from "@/core/components/ui/tooltip";
+import { ContextMenu, ContextMenuTrigger } from "@/core/components/ui/context-menu.tsx";
 
-import { ParkingSlotSheet } from "@/features/parking-map/components/parking-slot/parking-slot-sheet.tsx";
+import { ParkingSlotReservationSheet } from "@/features/parking-map/components/dialogs/parking-slot-reservation/parking-slot-reservation-sheet.tsx";
+import { ParkingSlotMenuContextContent } from "@/features/parking-map/components/parking-slot/parking-slot-menu-context-content.tsx";
+import { SlotButton } from "@/features/parking-map/components/parking-slot/slot-button.tsx";
 
-interface ParkingSlotProps {
+interface ParkingSlotProps extends ParkingSlotInterface {
   slot: string;
-  id: number;
-  isOccupied: boolean;
   index: number;
 }
 
-export const ParkingSlot: FC<ParkingSlotProps> = ({ slot, isOccupied, index, id }) => {
-  const [showReserveParkingSlotSheet, setShowReserveParkingSlotSheet] = useState(false);
+export const ParkingSlot: FC<ParkingSlotProps> = ({ slot, isOccupied, index, id, ...props }) => {
+  const [showReserveSheet, setShowReserveSheet] = useState(false);
 
   return (
     <>
-      <ParkingSlotSheet
-        open={showReserveParkingSlotSheet}
-        onOpenChange={setShowReserveParkingSlotSheet}
+      <ParkingSlotReservationSheet
+        open={showReserveSheet}
+        onOpenChange={setShowReserveSheet}
         slotId={id}
         slot={slot}
       />
-      <button
-        className={cn(
-          "relative group hover:bg-muted w-24 transition-colors h-12 border flex items-center justify-center",
-          {
-            "border-r-0": index % 2 === 1,
-            "border-l-0": index % 2 === 0,
-          }
-        )}
-        onClick={!isOccupied ? () => setShowReserveParkingSlotSheet(true) : undefined}
-      >
-        {isOccupied ? (
-          <img
-            src="/assets/car-template-light.png"
-            alt="car-template"
-            className={cn("", { "rotate-180": index % 2 === 1 })}
-          />
-        ) : (
-          <span className="text-xs group-hover:text-black font-medium text-gray-400">{slot}</span>
-        )}
-      </button>
+      <Tooltip>
+        <ContextMenu>
+          <ContextMenuTrigger>
+            <TooltipTrigger asChild>
+              <SlotButton
+                slot={slot}
+                index={index}
+                isOccupied={isOccupied}
+                onReserve={() => setShowReserveSheet(true)}
+                {...props}
+              />
+            </TooltipTrigger>
+          </ContextMenuTrigger>
+          {!isOccupied && <ParkingSlotMenuContextContent slot={{ id, isOccupied, ...props }} />}
+        </ContextMenu>
+      </Tooltip>
     </>
   );
 };

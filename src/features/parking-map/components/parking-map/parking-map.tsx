@@ -1,29 +1,58 @@
+import { useParams } from "react-router-dom";
+import { useMemo } from "react";
+
+import { LoadingSpinner } from "@/core/components/loading-spinner/loading-spinner.tsx";
+import { WordRotate } from "@/core/components/word-rotate/word-rotate.tsx";
+
 import { ParkingRow } from "@/features/parking-map/components/parking-row/parking-row.tsx";
 import { Indicator } from "@/features/parking-map/components/indicator/indicator.tsx";
-
-const initialParkedCars = ["A2", "A5", "A7", "D1", "D6", "F1", "C1", "B2", "E5", "F7"];
-
-const initialSlots = [
-  ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8"],
-  ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8"],
-  ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8"],
-  ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8"],
-  ["E1", "E2", "E3", "E4", "E5", "E6", "E7", "E8"],
-  ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8"],
-];
+import { organizeParkingSlots } from "@/features/parking-map/helpers";
+import { useGetParkingSlotsQuery } from "@/features/parking-map/services/hooks";
+import { SuccessReservationDialog } from "@/features/parking-map/components/dialogs/parking-slot-reservation/success-reservation-dialog.tsx";
 
 export const ParkingMap = () => {
-  return (
-    <div className="relative grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 xl:grid-cols-4 justify-items-center gap-y-24 w-full">
-      {initialSlots.map((row, rowIndex) => (
-        <ParkingRow
-          key={rowIndex}
-          row={row}
-          parkedCars={initialParkedCars}
+  const { areaId, floorId } = useParams();
+  const { data, isSuccess, isLoading } = useGetParkingSlotsQuery(areaId, floorId);
+
+  const formattedSlots = useMemo(
+    () => organizeParkingSlots((isSuccess && data) || []),
+    [data, isSuccess]
+  );
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center">
+        <LoadingSpinner className="size-24" />
+        <WordRotate
+          className=" font-semibold text-3xl"
+          words={[
+            "Loading parking slots...",
+            "Finding available spots...",
+            "Please wait while we check availability...",
+            "Choose your parking slot...",
+          ]}
         />
-      ))}
-      <Indicator type="exit" />
-      <Indicator type="enter" />
-    </div>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <SuccessReservationDialog />
+      <div className="relative grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 xl:grid-cols-4 items-start justify-items-center gap-y-24 w-full">
+        {formattedSlots?.map((row, rowIndex) => (
+          <ParkingRow
+            key={rowIndex}
+            row={row}
+          />
+        ))}
+        {formattedSlots.length !== 0 && (
+          <>
+            <Indicator type="exit" />
+            <Indicator type="enter" />
+          </>
+        )}
+      </div>
+    </>
   );
 };

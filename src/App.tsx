@@ -1,23 +1,38 @@
-import { Header } from "@/core/components/header";
-import { Toaster } from "@/core/components/ui/toaster.tsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Outlet } from "react-router-dom";
 
-import { ParkingMap } from "@/features/parking-map/components/parking-map/parking-map.tsx";
+import { Toaster } from "@/core/components/ui/toaster.tsx";
+import { FloatingLegend } from "@/core/components/floating-legend/floating-legend.tsx";
+
 import { ParkingSidebar } from "@/features/parking-sidebar/components/parking-sidebar/parking-sidebar.tsx";
+
+import { TooltipProvider } from "./core/components/ui/tooltip";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5,
+    },
+  },
+});
 
 function App() {
   return (
-    <div className="min-h-screen flex">
-      <ParkingSidebar />
-      <div className="sm:ml-64 py-8 w-full">
-        <div className="m-4 relative px-4 sm:px-8">
-          <Header />
-          <main className="flex flex-col items-center mt-16 space-y-4 w-full">
-            <ParkingMap />
-          </main>
+    <TooltipProvider delayDuration={50}>
+      <QueryClientProvider client={queryClient}>
+        <div
+          vaul-drawer-wrapper=""
+          className="min-h-screen bg-background flex"
+        >
+          <ParkingSidebar />
+          <Outlet />
+          <FloatingLegend />
+          <Toaster />
         </div>
-      </div>
-      <Toaster />
-    </div>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </TooltipProvider>
   );
 }
 

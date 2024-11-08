@@ -1,6 +1,16 @@
 export interface ParkingSlot {
-  slotId: string;
-  areaId: string;
+  id: string;
+  letter: string;
+  number: number;
+  reservationId?: string;
   isOccupied: boolean;
-  carId: string | null;
+  parkingStartTime: Date | null;
+  parkingEndTime: Date | null;
+  createdAt: Date;
+  modifiedAt: Date;
+  deletedAt: Date | null;
+  disabled: boolean;
+  parkingFloorId: string;
+  parkingAreaId: string;
+  totalReservationCost: number;
 }

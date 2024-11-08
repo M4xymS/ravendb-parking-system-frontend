@@ -1,1 +1,2 @@
-export { addParkingFloorSchema } from "./add-parking-floor-schema";
+export { parkingFloorSchema, editParkingFloorSchema } from "./parking-floor-schema.ts";
+export { parkingSlotSchema, editParkingSlotSchema } from "./parking-slot-schema.ts";
