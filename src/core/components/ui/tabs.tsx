@@ -1,5 +1,3 @@
-"use client";
-
 import { createContext, forwardRef, useContext, useState } from "react";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 import { motion, MotionConfig } from "framer-motion";
