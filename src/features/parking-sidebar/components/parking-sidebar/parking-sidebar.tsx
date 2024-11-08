@@ -2,6 +2,7 @@ import { FC, useState } from "react";
 
 import { AddParkingAreaDialog } from "@/features/parking-sidebar/components/add-parking-area-dialog";
 import { ParkingAreas } from "@/features/parking-sidebar/components/parking-sidebar/parking-areas.tsx";
+import { ParkingSidebarMobile } from "@/features/parking-sidebar/components/parking-sidebar/parking-sidebar-mobile.tsx";
 
 interface ParkingSidebarProps {
   open?: boolean;
@@ -13,6 +14,7 @@ export const ParkingSidebar: FC<ParkingSidebarProps> = ({ open, setIsOpen }) => 
 
   return (
     <>
+      <ParkingSidebarMobile />
       <aside
         className={`${open ? "block" : "hidden"} sm:block sm:fixed w-64 sm:border-r left-0 inset-0`}
       >

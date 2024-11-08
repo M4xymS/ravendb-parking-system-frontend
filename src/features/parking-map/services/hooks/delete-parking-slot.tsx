@@ -11,7 +11,7 @@ export const useDeleteParkingSlot = () => {
     mutationFn: (slotId: string) => deleteParkingSlotMutation(slotId),
     onSuccess: async (data: DeleteParkingSlotResponse) => {
       await queryClient.invalidateQueries({
-        queryKey: [getParkingSlotsQueryKey, data.slot.parkingFloorId, data.slot.parkingAreaId],
+        queryKey: [getParkingSlotsQueryKey, data.slot.parkingAreaId, data.slot.parkingFloorId],
       });
     },
   });

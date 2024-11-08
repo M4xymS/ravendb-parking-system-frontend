@@ -27,10 +27,10 @@ export const AddParkingSlotDialog: FC<AddParkingSlotDialogProps> = ({ showTrigge
         <ResponsiveModalTrigger asChild>
           <Button
             disabled={!floorId}
-            size="icon"
             variant="outline"
           >
-            <PlusIcon className="size-6" />
+            <PlusIcon className="size-6 mr-2" />
+            Add Slot
           </Button>
         </ResponsiveModalTrigger>
       )}

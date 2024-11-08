@@ -53,13 +53,13 @@ export const ParkingAreaCard: FC<ParkingCardProps> = ({ parkingArea, toggleClose
   const discountedWeekendRate = calculateDiscountedRate(weekendRate);
 
   return (
-    <ContextMenu>
-      <ContextMenuTrigger asChild>
-        <Card
-          className={`cursor-pointer mb-4 ${isSelected ? "bg-muted" : ""}`}
-          onClick={toggleClose}
-        >
-          <Link to={encodeURIComponent(id)}>
+    <Link to={encodeURIComponent(id)}>
+      <ContextMenu>
+        <ContextMenuTrigger asChild>
+          <Card
+            className={`cursor-pointer mb-4 ${isSelected ? "bg-muted" : ""}`}
+            onClick={toggleClose}
+          >
             <CardHeader className="p-4">
               <CardTitle className="flex justify-between items-center">
                 <span
@@ -120,10 +120,10 @@ export const ParkingAreaCard: FC<ParkingCardProps> = ({ parkingArea, toggleClose
                 <b className="text-right text-xl">{availableSlots}</b>
               </div>
             </CardFooter>
-          </Link>
-        </Card>
-      </ContextMenuTrigger>
-      <ParkingAreaContextContent parkingArea={parkingArea} />
-    </ContextMenu>
+          </Card>
+        </ContextMenuTrigger>
+        <ParkingAreaContextContent parkingArea={parkingArea} />
+      </ContextMenu>
+    </Link>
   );
 };
