@@ -1,9 +1,11 @@
 import { z } from "zod";
 
+import { productionUrl } from "@/core/constants/url-type.ts";
+
 import { addParkingAreaSchema } from "@/features/parking-sidebar/helpers/zod";
 
 export const postParkingAreaMutation = async (area: z.infer<typeof addParkingAreaSchema>) => {
-  const response = await fetch(`http://localhost:3000/parking-area`, {
+  const response = await fetch(`${productionUrl}/parking-area`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

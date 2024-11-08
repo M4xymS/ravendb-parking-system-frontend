@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { parkingSlotSchema } from "@/core/helpers/zod";
+import { productionUrl } from "@/core/constants/url-type.ts";
 
 export const postParkingSlotMutation = async (
   areaId: string | undefined,
@@ -16,7 +17,7 @@ export const postParkingSlotMutation = async (
   }
 
   const response = await fetch(
-    `http://localhost:3000/parking-slots/${encodeURIComponent(areaId)}/${encodeURIComponent(floorId)}`,
+    `${productionUrl}/parking-slots/${encodeURIComponent(areaId)}/${encodeURIComponent(floorId)}`,
     {
       method: "POST",
       headers: {

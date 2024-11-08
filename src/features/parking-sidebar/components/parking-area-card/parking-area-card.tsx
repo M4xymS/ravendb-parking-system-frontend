@@ -53,7 +53,7 @@ export const ParkingAreaCard: FC<ParkingCardProps> = ({ parkingArea, toggleClose
   const discountedWeekendRate = calculateDiscountedRate(weekendRate);
 
   return (
-    <Link to={encodeURIComponent(id)}>
+    <Link to={`/${encodeURIComponent(id)}`}>
       <ContextMenu>
         <ContextMenuTrigger asChild>
           <Card
