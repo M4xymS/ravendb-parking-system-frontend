@@ -36,7 +36,7 @@ git clone https://github.com/M4xymS/ravendb-parking-system-frontend
 Change your current working directory to the project folder:
 
 ```bash
-cd my-project
+cd ravendb-parking-system-frontend
 ```
 
 ### Step 3: Install Dependencies
